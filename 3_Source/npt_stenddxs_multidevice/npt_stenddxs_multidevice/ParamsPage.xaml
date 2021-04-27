@@ -1,0 +1,115 @@
+﻿<Page x:Class="NptMultiSlot.ParamsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NptMultiSlot"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Loaded="Page_Loaded"
+        Title="PopupWin" d:DesignHeight="450" d:DesignWidth="270">
+    <Page.Resources>
+            <local:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
+            <local:TimerToIntConverter x:Key="TimerToIntConverter" />
+            <local:FloatConverter x:Key="FloatConverter" />
+
+    </Page.Resources>
+
+    <DockPanel Background="#F3F6EF">
+        <WrapPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Right">
+            <RadioButton IsChecked="{Binding Path=DevParamKey, Mode=TwoWay, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter='1KEX'}" Content="НПТ-1К.00.1.3" Style="{StaticResource {x:Type ToggleButton}}" Margin="0,0,5,0"/>
+            <RadioButton IsChecked="{Binding Path=DevParamKey, Mode=TwoWay, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter='NPT3'}" Content="НПТ-3.00.1.2" Style="{StaticResource {x:Type ToggleButton}}" Margin="0,0,5,0"/>
+            <RadioButton IsChecked="{Binding Path=DevParamKey, Mode=TwoWay, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter='3.Ex'}" Content="НПТ-3.00.1.2.Ех" Style="{StaticResource {x:Type ToggleButton}}" Margin="0,0,5,0"/>
+        </WrapPanel>
+
+        <DockPanel DockPanel.Dock="Top" Background="#F3F6EF">
+                <WrapPanel Orientation="Vertical">
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Датчик" Width="80"/>
+                        <ComboBox Width="170"
+                            SelectedValue="{Binding CalibrateParamSensor}"
+                            ItemsSource="{Binding ListSensorsForDXS}"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Верхняя граница" Width="150"/>
+                        <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  
+                                             Text="{Binding MaxCalibrate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource FloatConverter} }" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Нижняя граница" Width="150"/>
+                        <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  
+                                             Text="{Binding MinCalibrate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource FloatConverter}}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="T контроля, °С" Width="150"/>
+                        <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  
+                                             Text="{Binding TempDXS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource FloatConverter}, ConverterParameter='-5.0:5.0'}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Δ °С" Width="150"/>
+                        <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left" 
+                                             Text="{Binding DeltaTempDXS, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource FloatConverter}, ConverterParameter='0.0:5.0'}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Таймер прогрева" Width="150" />
+                        <xctk:MaskedTextBox Mask="00:00" InsertKeyMode="Overwrite"
+                            Text="{Binding TimeForDXS, Mode=TwoWay, Converter={StaticResource TimerToIntConverter}, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                    </WrapPanel>
+                </WrapPanel>
+            </DockPanel>
+
+
+            <DockPanel Background="#F3F6EF">
+            <Label Content="Заводские параметры" DockPanel.Dock="Top" HorizontalAlignment="Center" Margin="0,7,0,3" FontWeight="Bold"/>
+            <WrapPanel Orientation="Vertical">
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Датчик" Width="80"/>
+                        <ComboBox Width="170"
+                            SelectedValue="{Binding NptParamSensor}"
+                            ItemsSource="{Binding SensorsAll}"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Нижняя граница"  Width="150"/>
+                    <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  Text="{Binding MinScale, Converter={StaticResource FloatConverter}}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Верхняя граница"  Width="150"/>
+                    <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  Text="{Binding MaxScale, Converter={StaticResource FloatConverter}}" Width="100"/>
+                    </WrapPanel>
+                        <WrapPanel Orientation="Horizontal" IsEnabled="{Binding EnableModeTermRes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Label Content="Схема подключения" Width="150"/>
+                            <ComboBox Width="100" SelectedIndex="{Binding ModeTermResNdx, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="2-х проводная"/>
+                            <ComboBoxItem Content="3-х проводная"/>
+                            <ComboBoxItem Content="4-х проводная"/>
+                    </ComboBox>
+                </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" Visibility="{Binding DisplayModeOut, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}">
+                        <Label Content="Тип выходного сигнала" Width="150" />
+                            <ComboBox SelectedIndex="{Binding ModeOut, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
+                            <ComboBoxItem Content="0-20 мА"/>
+                            <ComboBoxItem Content="4-20 мА"/>
+                            <ComboBoxItem Content="0-5 мА"/>
+                            <ComboBoxItem Content="0-10 В"/>
+                            <ComboBoxItem Content="0-5 В"/>
+                            <ComboBoxItem Content="2-10 В"/>
+                        </ComboBox>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Выходной сигнал аварии" Width="150" />
+                    <xctk:DecimalUpDown  ShowButtonSpinner="False" TextAlignment="Left"  Text="{Binding ErrState, Converter={StaticResource FloatConverter}}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label Content="Фильтр" Width="150"/>
+                    <xctk:DecimalUpDown ShowButtonSpinner="False" TextAlignment="Left" Text="{Binding Ftime, Converter={StaticResource FloatConverter}}" Width="100"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" Visibility="{Binding DisplayColdSold, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Label Content="КХС" Width="150"/>
+                        <CheckBox IsChecked="{Binding ColdSold, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="80"/>
+                    </WrapPanel>
+                </WrapPanel>
+            </DockPanel>
+
+    </DockPanel>
+</Page>

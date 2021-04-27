@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="NptMultiSlot.ProcessIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NptMultiSlot"
+             mc:Ignorable="d"
+             x:Name="parent">
+    <Grid DataContext="{Binding ElementName=parent}">
+        <Border Width="15" Height="15" BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0" Background="#E3EAD5">
+            <Ellipse Width="8" Height="8" Fill="{Binding Path=ProcessColor, FallbackValue='#E3EAD5'}" Stroke="Black"/>
+        </Border>
+    </Grid>
+</UserControl>

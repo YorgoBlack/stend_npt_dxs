@@ -1,0 +1,21 @@
+﻿<Window x:Class="NptMultiSlot.DefaultSettingsWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NptMultiSlot"
+        mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        Title="Настройки по умолчанию"
+        Loaded="Window_Loaded"
+        Height="550" Width="300">
+    <DockPanel x:Name="SettingsPanel" IsEnabled="{Binding PanelEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <WrapPanel DockPanel.Dock="Top">
+            <Frame x:Name="SlotUI"/>
+        </WrapPanel>
+        <WrapPanel Height="30" DockPanel.Dock="Top" HorizontalAlignment="Center" >
+            <Button Content="Применить настройки" Click="Apply_Click"/>
+            <Button Content="Отмена" Margin="50,0,0,0" Click="Button_Click"/>
+        </WrapPanel>
+    </DockPanel>
+</Window>

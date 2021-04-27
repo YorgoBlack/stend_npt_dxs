@@ -1,0 +1,29 @@
+﻿<Window x:Class="NptMultiSlot.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:NptMultiSlot"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        Top="0"
+        Left="0"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight }, Converter={local:RatioConverter},ConverterParameter=0.9}"
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={local:RatioConverter},ConverterParameter=0.9}"
+        Title="Программа калибровки ДХС">
+    <DockPanel>
+        <Menu VerticalAlignment="Top" DockPanel.Dock="Top">
+            <MenuItem Header="Настройка" >
+                <MenuItem Header="Настройка подключений" Click="SlotConnectors_Click" />
+                <MenuItem Header="Установка значений по умолчанию" Click="SlotDefaults_Click" />
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom"  Background="#008e86">
+            
+        </StatusBar>
+        <Grid Name="SlotsGrid" Background="LightGray" Width="Auto">
+        </Grid>
+    </DockPanel>
+</Window>
